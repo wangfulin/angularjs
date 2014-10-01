@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<title>Shopping Cart</title>
+	</head>
+	<body>
+		<div ng-controller="CartController">
+			<div ng-repeat="item in items">
+				<span>{{item.title}}</span>
+				<input ng-model="item.quantity" />
+				<span>{{item.price|currency}}</span>
+				<span>{{item.price*item.quantity|currency}}</span>
+			</div>
+			<!--<div>Total:{{bill.total|currency}}</div>
+			<div>Discount:{{bill.discount|currency}}</div>
+			<div>Subtotal:{{bill.subtotal|currency}}</div>-->
+			<div>Total:{{totalCart()|currency}}</div>
+			<div>Discount:{{bill.discount|currency}}</div>
+			<div>Subtotal:{{subtotal()|currency}}</div>
+		</div>	
+		<script src="http://cdn.bootcss.com/angular.js/1.3.0-beta.8/angular.min.js"></script>
+		<script>
+			function CartController($scope){
+				$scope.bill={};
+
+				$scope.items=[
+					{title:"Paint pots",quantity:8,price:3.95},
+					{title:"Polka dots",quantity:17,price:12.95},
+					{title:"Pebbles",quantity:5,price:6.95}
+				];
+
+				$scope.totalCart=function(){
+					var total=0;
+					for(var i=0,len=$scope.items.length;i<len;i++){
+						total+=$scope.items[i].price*$scope.items[i].quantity;
+					}
+
+					return total;
+				}
+
+				$scope.subtotal=function(){
+					return $scope.totalCart()-$scope.bill.discount;
+				}
+
+				function calculateDiscount(newValue,oldValue,scope){
+					$scope.bill.discount=newValue>100?10:0;
+				}
+
+				$scope.$watch($scope.totalCart,calculateDiscount);
+
+				// var calculateTotals=function(){
+				// 	var total=0;
+				// 	for(var i=0,len=$scope.items.length;i<len;i++){
+				// 		total+=$scope.items[i].price*$scope.items[i].quantity;
+				// 	}
+
+				// 	$scope.bill.total=total;
+				// 	$scope.bill.discount=total>100?10:0;
+				// 	$scope.bill.subtotal=total-$scope.bill.discount;
+				// }
+
+				//$scope.$watch("items",calculateTotals,true);
+
+				// $scope.$watch(function(){
+				// 	var total=0;
+				// 	for(var i=0,len=$scope.items.length;i<len;i++){
+				// 		total+=$scope.items[i].price*$scope.items[i].quantity;
+				// 	}
+
+				// 	$scope.bill.total=total;
+				// 	$scope.bill.discount=(total>100?10:0);
+				// 	$scope.bill.subtotal=total-$scope.bill.discount;
+				// });
+			}
+		</script>
+	</body>
+</html>

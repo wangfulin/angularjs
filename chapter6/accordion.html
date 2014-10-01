@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="appModule">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="accordion.css"  />
+    <script src="http://cdn.bootcss.com/angular.js/1.3.0-beta.8/angular.min.js"></script>
+  </head>
+  <body ng-controller="SomeController">
+    <accordion>
+      <expander class="expander" ng-repeat="expander in expanders" expander-title="expander.title">
+        {{expander.text}}
+      </expander>
+    </accordion>
+    <script>
+      function SomeController($scope){
+        $scope.expanders=[
+          {title:"Click me to expand",text:"Hi there folks,I am the content that was hidden and is now shown"},
+          {title:"Click this",text:"I am even better text than you have seen previously."},
+          {title:"No,click me!",text:"I am text that shoud be seen before seeing others"}
+        ];
+      }
+
+      var appModule=angular.module("appModule",[]);
+
+      appModule.directive("accordion",function(){
+         return {
+            restrict:"EA",
+            replace:true,
+            template:"<div ng-transclude></div>",
+            controller:function(){
+              var expanders=[];
+
+              this.getOpened=function(selectedExpander){
+                angular.forEach(expanders,function(expander){
+                  if(selectedExpander!=expander){
+                    expander.showMe=false;
+                  }
+                });
+              }
+
+              this.addExpander=function(expander){
+                expanders.push(expander);
+              }
+            }
+         };
+      });
+
+      appModule.directive("expander",function(){
+        return {
+          restrict:"EA",
+          replace:true,
+          transclude:true,
+          require:"^?accordion",
+          scope:{title:'=expanderTitle'},
+          template:"<div>"+
+              "<div class='title' ng-click='toggle()'>{{title}}</div>"+
+              "<div class='body' ng-show='showMe' ng-transclude></div>"+
+              "</div>",
+          link:function(scope,element,attrs,accordionController){
+            scope.showMe=false;
+            accordionController.addExpander(scope);
+
+            scope.toggle=function toggle(){
+              scope.showMe=!scope.showMe;
+              accordionController.getOpened(scope);
+            }
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

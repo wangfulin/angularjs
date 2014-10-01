@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+		<meta charset="utf-8" />
+		<script src="http://cdn.bootcss.com/angular.js/1.3.0-beta.8/angular.min.js"></script>
+		<title>Hi</title>
+	</head>
+	<body>
+		<hello></hello>
+		<script>
+			angular.module("app",[]).directive("hello",function(){
+				return {
+					restrict:"E",
+					template:"<div>Hi there</div>",
+					replace:true
+				};
+			});
+		</script>
+	</body>
+</html>

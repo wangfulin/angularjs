@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+	<head>
+		<meta charset="utf-8" />
+		<script src="http://cdn.bootcss.com/angular.js/1.3.0-beta.8/angular.min.js"></script>
+	</head>
+	<body ng-controller="TextController">
+		<p>{{someText.message}}</p>
+		<script>
+			var myAppModule=angular.module("myapp",[]);
+
+			myAppModule.controller("TextController",function($scope){
+				var someText={};
+				someText.message="You have started your journey.";
+				$scope.someText=someText;
+			});
+		</script>
+	</body>
+</html>

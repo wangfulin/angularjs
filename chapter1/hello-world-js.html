@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<title>Hello, World in Javascript</title>
+	</head>
+	<body>
+		<p id="greeting"></p>
+		<script>
+			var isIE=document.attachEvent;
+			var addListener=isIE
+				?function(e,t,f){e.attachEvent("on"+t,f);}
+				:function(e,t,f){e.addEventListener(t,f,false)};
+			addListener(window,"load",function(){
+				var greeting=document.getElementById("greeting");
+				if(isIE){
+					greeting.innerText="Hello, IE";
+				}else{
+					greeting.textContent="Hello, Chrome";
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="utf-8" />
+		<script src="http://cdn.bootcss.com/angular.js/1.3.0-beta.8/angular.min.js"></script>	
+		<style>
+			.menu-disabled-true{
+				color:gray;
+			}
+		</style>	
+	</head>
+	<body>
+		<div ng-controller="DeathrayMenuController">
+			<ul>
+				<li class="menu-disabled-{{isDisabled}}" ng-click="stun()">Stun</li>
+				<li ng-click="disintegrate()">Disintegrate</li>
+				<li ng-click="erase()">Erase from history</li>
+			</ul>
+		</div>
+		<script>
+			function DeathrayMenuController($scope){
+				$scope.isDisabled=false;
+
+				$scope.stun=function(){
+					$scope.isDisabled=true;
+				}
+			}
+		</script>
+	</body>
+</html>

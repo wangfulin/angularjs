@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="utf-8" />
+		<title>Course List</title>
+	</head>
+	<body ng-controller="CourseList">
+		<table border="1px solid black" >
+			<thead>
+				<tr>
+					<th>姓名</th>
+					<th>语文</th>
+					<th>数学</th>
+					<th>英语</th>
+					<th>操作</th>
+				</tr>	
+			</thead>
+			<tbody>
+				<tr ng-repeat="course in courses">
+					<td>{{course.name}}</td>
+					<td>{{course.chinese}}</td>
+					<td>{{course.math}}</td>
+					<td>{{course.english}}</td>
+					<td><input type="button" ng-click="remove($index)" value="Remove" /></td>
+				</tr>
+			</tbody>
+		</table>
+		<script src="http://cdn.bootcss.com/angular.js/1.3.0-beta.8/angular.min.js"></script>
+		<script>
+			function CourseList($scope){
+				$scope.courses=[
+					{name:"wangfulin",chinese:99,math:98,english:96},
+					{name:"wutian",chinese:98,math:100,english:99},
+					{name:"wangfang",chinese:99,math:99,english:100},
+					{name:"wangping",chinese:90,math:100,english:100},
+					{name:"yulanjiao",chinese:100,math:100,english:100}
+				];
+
+				$scope.remove=function(index){
+					$scope.courses.splice(index,1);
+				}
+			}
+		</script>
+	</body>
+</html>
